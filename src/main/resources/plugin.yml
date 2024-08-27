@@ -1,0 +1,7 @@
+name: ChestReset
+main: me.antonschouten.cr.Main
+version: 1.1
+
+commands:
+  chestreset:
+    description: Clear chests.
