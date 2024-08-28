@@ -3,8 +3,7 @@ package me.antonschouten.cr.API;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Chest;
+import org.bukkit.block.*;
 import org.bukkit.entity.Player;
 
 public class API {
@@ -17,6 +16,12 @@ public class API {
         for (BlockState b : tileEntities) {
             if (b instanceof Chest chest) {
                 chest.getInventory().clear();
+            }
+            if (b instanceof Hopper hopper) {
+                hopper.getInventory().clear();
+            }
+            if (b instanceof Barrel barrel) {
+                barrel.getInventory().clear();
             }
         }
     }
