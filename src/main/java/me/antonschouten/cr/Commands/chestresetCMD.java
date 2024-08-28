@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package me.antonschouten.cr.Commands;
 
 import me.antonschouten.cr.Main;
@@ -24,29 +19,41 @@ public class chestresetCMD implements CommandExecutor {
             this.p.sendMessage(Main.perms);
             return true;
         } else if (args.length == 0) {
-            this.p.sendMessage("§f► §c/chestreset world §fClear all chest's in your current world.");
-            this.p.sendMessage("§f► §c/chetstrest chunk §fClear all chest's in your current chunk.");
-            this.p.sendMessage("§f► §c/chestreset server §fClear all chest's in the server.");
-            this.p.sendMessage("§2Plugin made by: §aAS-network");
+            sendHelpMessage();
             return true;
         } else if (args[0].equalsIgnoreCase("world")) {
             API.clearChestWorld(this.p);
             this.p.sendMessage(Main.prefix + "All chest's in world§c " + this.p.getWorld().getName() + " §fare now reseted.");
             return true;
         } else if (args[0].equalsIgnoreCase("chunk")) {
-            API.clearChestChunk(this.p);
-            this.p.sendMessage(Main.prefix + "All chest's in your current chunk are now reseted.");
+            if (args.length == 1) {
+                API.clearChestChunk(this.p);
+                this.p.sendMessage(Main.prefix + "All chest's in your current chunk are now reseted.");
+            } else {
+                try {
+                    int radius = Integer.parseInt(args[1]);
+                    API.clearChestChunk(this.p, radius);
+                    this.p.sendMessage(Main.prefix + "All chest's in the specified range of chunks are now reseted.");
+                } catch (NumberFormatException e) {
+                    this.p.sendMessage("§cInvalid input. Please enter a valid number for the radius.");
+                    return true;
+                }
+            }
             return true;
         } else if (args[0].equalsIgnoreCase("server")) {
             API.clearChestServer(this.p);
             this.p.sendMessage(Main.prefix + "All chest's in the server are now reseted.");
             return true;
         } else {
-            this.p.sendMessage("§f► §c/chestreset world §fClear all chest's in your current world.");
-            this.p.sendMessage("§f► §c/chetstrest chunk §fClear all chest's in your current chunk.");
-            this.p.sendMessage("§f► §c/chestreset server §fClear all chest's in the server.");
-            this.p.sendMessage("§2Plugin made by: §aAS-network");
+            sendHelpMessage();
             return true;
         }
+    }
+
+    private void sendHelpMessage() {
+        p.sendMessage("§f► §c/chestreset world §fClear all chest's in your current world.");
+        p.sendMessage("§f► §c/chestreset chunk [radius] §fClear all chest's in the radius of your current chunk.");
+        p.sendMessage("§f► §c/chestreset server §fClear all chest's in the server.");
+        p.sendMessage("§2Plugin made by: §aAS-network");
     }
 }
